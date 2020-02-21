@@ -113,7 +113,7 @@ public class VentasIndex extends javax.swing.JFrame {
                         .addComponent(btnRegreso))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 681, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -191,7 +191,9 @@ public class VentasIndex extends javax.swing.JFrame {
     }//GEN-LAST:event_tb_modeloMouseClicked
 
     private void btnRegresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresoActionPerformed
-        
+        Inicio in = new Inicio();
+        in.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegresoActionPerformed
     public void cargarTabla() throws SQLException{
         try {
@@ -201,8 +203,10 @@ public class VentasIndex extends javax.swing.JFrame {
             PreparedStatement ps;
             ResultSet rs;
             
-            String sql_modelo = "SELECT idmodelo,numero,color,marca,tipo,clasificacion,costo "
-                    + "FROM modelotro ";
+            String sql_modelo = "SELECT modelotro.idmodelo,modelotro.numero"+
+                    ",modelotro.color,modelotro.marca,modelotro.tipo"+
+                    ",modelotro.clasificacion, modelotro.costo, almacen.existencia "
+                    +"FROM modelotro,almacen WHERE almacen.id_modelo=modelotro.idmodelo";
             ps = con.prepareStatement(sql_modelo);
             rs = ps.executeQuery();
             ResultSetMetaData rSMd = rs.getMetaData();
@@ -214,6 +218,7 @@ public class VentasIndex extends javax.swing.JFrame {
             modelo.addColumn("Tipo");
             modelo.addColumn("Clasificacion");
             modelo.addColumn("Costo");
+            modelo.addColumn("Existencias");
             while(rs.next()){
                 Object[] filas  = new Object[cantidadcolumnas];
                 for (int i = 0; i < cantidadcolumnas; i++) {
