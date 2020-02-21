@@ -154,13 +154,14 @@ public class VentasIndex extends javax.swing.JFrame {
                     calls = (CallableStatement) con.prepareCall("CALL venta_acto(?,?,?,?,?)");
                     calls.setString(1,  ""+getIdmodelo());
                     calls.setString(2, ""+date);
-                    calls.setString(3, ""+total*(int)cantidad_tt.getValue());
+                    calls.setString (3, ""+total*(int)cantidad_tt.getValue());
                     calls.setString(4,nombre);
                     calls.setInt(5,(int)cantidad_tt.getValue());
                     calls.execute();
                     ps= con.prepareStatement("COMMIT");
                     ps.execute();
                     JOptionPane.showMessageDialog(null, "Compra Realizada");
+                    cargarTabla();
                 } catch (SQLException ex) {
                     Logger.getLogger(VentasIndex.class.getName()).log(Level.SEVERE, null, ex);
                 }
